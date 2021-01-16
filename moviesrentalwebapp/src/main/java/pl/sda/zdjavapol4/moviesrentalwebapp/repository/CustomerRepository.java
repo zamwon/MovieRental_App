@@ -16,7 +16,7 @@ public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
     Optional<Customer> findByStreet(String street);
 
-    Optional<Customer> findByAddress(String city, String street);
+    Optional<Customer> findByCityAndStreet(String city, String street);
 
     Optional<Customer> findByPhoneNumber(String phoneNumber);
 
