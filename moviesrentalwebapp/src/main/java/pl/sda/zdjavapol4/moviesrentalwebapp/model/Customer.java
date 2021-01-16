@@ -18,7 +18,8 @@ public class Customer {
     private Long id;
 
     private String email;
-    private String address;
+    private String city;
+    private String street;
     private String phoneNumber;
 
     @OneToMany(mappedBy = "customer")
