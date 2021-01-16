@@ -19,6 +19,8 @@ public class Movie {
     private Long id;
 
     private String title;
+
+    @Enumerated
     private Genre genre;
     private LocalDate releaseDate;
     private String description;
