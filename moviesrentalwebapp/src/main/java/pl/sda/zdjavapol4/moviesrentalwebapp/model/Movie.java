@@ -28,7 +28,18 @@ public class Movie {
     @OneToMany(mappedBy = "movie")
     private List<Review> reviews;
 
-    @OneToMany(mappedBy = "movie")
+    @OneToMany(orphanRemoval = true,
+    cascade = CascadeType.ALL,
+    fetch = FetchType.EAGER,
+    mappedBy = "movie")
     private List<MovieCopy> copies;
+
+    // zmienic na int(ile mamy dostepnych filmow)
+    // , jezli liczba filmow odjac zmienna
+    // 'ileCheZamowic' jest wieksza od zera ->
+    // spoko mozna wypozyczyc, w innym przypadku
+    // wyswietl informacje ze dostepne sa tylko
+    // "liczba wprowadzona minus wynik z
+    // (liczba dostepnych minus ile chce wypozyczyc)"
 
 }

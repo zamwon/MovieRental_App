@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -20,9 +17,11 @@ public class MovieCopy {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "movie_id")
     private Movie movie;
 
     @ManyToOne
     private Order order;
 
+    private CopyStatus status;
 }

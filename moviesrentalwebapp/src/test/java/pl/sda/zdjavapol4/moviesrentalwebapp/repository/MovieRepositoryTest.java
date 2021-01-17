@@ -4,10 +4,13 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import pl.sda.zdjavapol4.moviesrentalwebapp.model.CopyStatus;
 import pl.sda.zdjavapol4.moviesrentalwebapp.model.Genre;
 import pl.sda.zdjavapol4.moviesrentalwebapp.model.Movie;
+import pl.sda.zdjavapol4.moviesrentalwebapp.model.MovieCopy;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +20,8 @@ public class MovieRepositoryTest {
 
     @Autowired
     private MovieRepository movieRepository;
+    @Autowired
+    private MovieCopyRepository copyRepository;
 
     // 1
     @Test
@@ -80,6 +85,49 @@ public class MovieRepositoryTest {
         Assertions.assertThat(foundMovie.getGenre()).isEqualTo(gatunekFilmu2);
     }
 
+    //3
 
+    @Test
+    public void saveMovieAndRelatedCopy(){
+
+        // given
+        String title = "Killer";
+
+        Movie movie1 = new Movie();
+        movie1.setTitle(title);
+        movie1.setReleaseDate(LocalDate.of(2020, 12, 10));
+
+        MovieCopy c1 = new MovieCopy();
+        c1.setMovie(movie1);
+        c1.setStatus(CopyStatus.AVAILABLE);
+
+        MovieCopy c2 = new MovieCopy();
+        c2.setMovie(movie1);
+        c1.setStatus(CopyStatus.RENTED);
+
+        List<MovieCopy> iloscKillerow = new ArrayList<>();
+        iloscKillerow.add(c1);
+        iloscKillerow.add(c2);
+
+        Optional<Movie> addedMovieOptional = movieRepository.findByTitle(title);
+        Assertions.assertThat(addedMovieOptional.isEmpty()).isTrue();
+
+        // when
+
+        movieRepository.save(movie1);
+        addedMovieOptional = movieRepository.findByTitle(title);
+        Assertions.assertThat(addedMovieOptional.isPresent()).isTrue();
+        Movie addedMovie = addedMovieOptional.get();
+
+        List<MovieCopy> foundCopies = copyRepository.findAll();
+
+        // then
+
+        Assertions.assertThat(addedMovie.getTitle()).isEqualTo(movie1.getTitle());
+        Assertions.assertThat(addedMovie.getReleaseDate()).isEqualTo(movie1.getReleaseDate());
+
+        Assertions.assertThat(foundCopies.isEmpty()).isFalse();
+
+    }
 
 }
