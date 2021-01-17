@@ -48,11 +48,12 @@ public class MovieRepositoryTest {
         Assertions.assertThat(foundMovie.getTitle()).isEqualTo(m1.getTitle());
         Assertions.assertThat(foundMovie.getReleaseDate()).isEqualTo(m1.getReleaseDate());
 
-        // 2
+
     }
+    // 2
 
     @Test
-    public void finds_movieByGenre () {
+    public void finds_movie_by_genre () {
 
         //given
         Genre gatunekFilmu2 = Genre.COMEDY;
@@ -88,7 +89,7 @@ public class MovieRepositoryTest {
     //3
 
     @Test
-    public void saveMovieAndRelatedCopy(){
+    public void save_movie_and_relate_copy(){
 
         // given
         String title = "Killer";
@@ -130,5 +131,42 @@ public class MovieRepositoryTest {
         Assertions.assertThat(foundCopies.isEmpty()).isFalse();
 
     }
+
+
+    // 4
+
+    @Test
+    public void finds_movie_by_release_Date () {
+
+        //given
+        LocalDate premiera = LocalDate.of(2020, 12, 9);
+        String title2 = "My programisci XD";
+
+        Movie moviePremiere = new Movie();
+        moviePremiere.setTitle(title2);
+        moviePremiere.setReleaseDate(premiera);
+
+        List<Movie> foundMoviesList = movieRepository.findByReleaseDate(premiera);
+        Assertions.assertThat(foundMoviesList.isEmpty()).isTrue();
+
+        //when
+        movieRepository.save(moviePremiere);
+        foundMoviesList = movieRepository.findByReleaseDate(premiera);
+
+        //then
+
+        Assertions.assertThat(foundMoviesList.isEmpty()).isFalse();
+        Assertions.assertThat(foundMoviesList.size()).isEqualTo(1);
+
+        Movie foundMovie = foundMoviesList.get(0);
+        //not null
+        //cheak fields
+
+        Assertions.assertThat(foundMovie).isNotNull();
+
+        Assertions.assertThat(foundMovie.getTitle()).isEqualTo(title2);
+        Assertions.assertThat(foundMovie.getReleaseDate()).isEqualTo(premiera);
+    }
+
 
 }

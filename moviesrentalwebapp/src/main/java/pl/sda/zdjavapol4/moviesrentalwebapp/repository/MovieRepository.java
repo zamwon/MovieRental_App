@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import pl.sda.zdjavapol4.moviesrentalwebapp.model.Genre;
 import pl.sda.zdjavapol4.moviesrentalwebapp.model.Movie;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,6 @@ public interface MovieRepository extends CrudRepository<Movie, Long> {
 
     List<Movie> findAllByGenre(Genre genre);
 
-    Optional<Movie> findByReleaseDate(String releaseDate);
+    List<Movie> findByReleaseDate(LocalDate releaseDate);
 
 }
