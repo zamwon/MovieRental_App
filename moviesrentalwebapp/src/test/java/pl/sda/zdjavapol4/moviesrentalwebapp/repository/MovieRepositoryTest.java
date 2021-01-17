@@ -109,6 +109,7 @@ public class MovieRepositoryTest {
         iloscKillerow.add(c1);
         iloscKillerow.add(c2);
 
+        movie1.setCopies(iloscKillerow);
         Optional<Movie> addedMovieOptional = movieRepository.findByTitle(title);
         Assertions.assertThat(addedMovieOptional.isEmpty()).isTrue();
 

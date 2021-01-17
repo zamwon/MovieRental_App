@@ -22,7 +22,9 @@ public class Order {
     @ManyToOne
     Customer customer;
 
+    @Enumerated
     OrderStatus orderStatus;
+
     LocalDate deliveryDate;
     LocalDate returnDate;
 
