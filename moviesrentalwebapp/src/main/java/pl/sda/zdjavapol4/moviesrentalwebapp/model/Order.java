@@ -27,6 +27,6 @@ public class Order {
     LocalDate returnDate;
 
     @OneToMany(mappedBy = "order")
-    List<MovieCopy> copies;
+    List<Copy> copies;
 
 }

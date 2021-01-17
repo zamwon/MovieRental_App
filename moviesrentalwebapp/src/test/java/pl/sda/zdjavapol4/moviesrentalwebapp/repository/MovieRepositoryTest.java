@@ -7,7 +7,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import pl.sda.zdjavapol4.moviesrentalwebapp.model.CopyStatus;
 import pl.sda.zdjavapol4.moviesrentalwebapp.model.Genre;
 import pl.sda.zdjavapol4.moviesrentalwebapp.model.Movie;
-import pl.sda.zdjavapol4.moviesrentalwebapp.model.MovieCopy;
+import pl.sda.zdjavapol4.moviesrentalwebapp.model.Copy;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -88,46 +88,44 @@ public class MovieRepositoryTest {
     //3
 
     @Test
-    public void saveMovieAndRelatedCopy(){
+    public void saves_movie_and_related_copies() {
+        //given
+        String title = "Avatar";
 
-        // given
-        String title = "Killer";
+        Movie m1 = new Movie();
+        m1.setTitle(title);
+        m1.setReleaseDate(LocalDate.of(1999, 2, 11));
 
-        Movie movie1 = new Movie();
-        movie1.setTitle(title);
-        movie1.setReleaseDate(LocalDate.of(2020, 12, 10));
-
-        MovieCopy c1 = new MovieCopy();
-        c1.setMovie(movie1);
+        //create related copies
+        Copy c1 = new Copy();
         c1.setStatus(CopyStatus.AVAILABLE);
+        c1.setMovie(m1);
+        Copy c2 = new Copy();
+        c2.setMovie(m1);
+        c2.setStatus(CopyStatus.RENTED);
 
-        MovieCopy c2 = new MovieCopy();
-        c2.setMovie(movie1);
-        c1.setStatus(CopyStatus.RENTED);
+        List<Copy> copies = new ArrayList<>();
+        copies.add(c1);
+        copies.add(c2);
+        //add copies list to movie
+        m1.setCopies(copies);
 
-        List<MovieCopy> iloscKillerow = new ArrayList<>();
-        iloscKillerow.add(c1);
-        iloscKillerow.add(c2);
+        Optional<Movie> foundMovieOptional = movieRepository.findByTitle(title);
+        Assertions.assertThat(foundMovieOptional.isEmpty()).isTrue();
 
-        Optional<Movie> addedMovieOptional = movieRepository.findByTitle(title);
-        Assertions.assertThat(addedMovieOptional.isEmpty()).isTrue();
+        //when
+        movieRepository.save(m1);
+        foundMovieOptional = movieRepository.findByTitle(title);
+        Assertions.assertThat(foundMovieOptional.isPresent()).isTrue();
+        Movie foundMovie = foundMovieOptional.get();
 
-        // when
+        List<Copy> foundCopies = copyRepository.findAll();
 
-        movieRepository.save(movie1);
-        addedMovieOptional = movieRepository.findByTitle(title);
-        Assertions.assertThat(addedMovieOptional.isPresent()).isTrue();
-        Movie addedMovie = addedMovieOptional.get();
-
-        List<MovieCopy> foundCopies = copyRepository.findAll();
-
-        // then
-
-        Assertions.assertThat(addedMovie.getTitle()).isEqualTo(movie1.getTitle());
-        Assertions.assertThat(addedMovie.getReleaseDate()).isEqualTo(movie1.getReleaseDate());
+        //then
+        Assertions.assertThat(foundMovie.getTitle()).isEqualTo(m1.getTitle());
+        Assertions.assertThat(foundMovie.getReleaseDate()).isEqualTo(m1.getReleaseDate());
 
         Assertions.assertThat(foundCopies.isEmpty()).isFalse();
-
     }
 
 }

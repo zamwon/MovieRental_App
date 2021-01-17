@@ -32,7 +32,7 @@ public class Movie {
     cascade = CascadeType.ALL,
     fetch = FetchType.EAGER,
     mappedBy = "movie")
-    private List<MovieCopy> copies;
+    private List<Copy> copies;
 
     // zmienic na int(ile mamy dostepnych filmow)
     // , jezli liczba filmow odjac zmienna

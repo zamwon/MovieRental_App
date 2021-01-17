@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-public class MovieCopy {
+public class Copy {
 
     @Id
     @GeneratedValue
