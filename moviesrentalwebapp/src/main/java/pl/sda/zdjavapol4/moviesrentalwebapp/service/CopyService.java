@@ -14,7 +14,7 @@ public interface CopyService {
 
     public void update(MovieCopy copy);
 
-    public void delete(Long id);
+    public void delete(MovieCopy copy);
 }
 
 // implementacja service

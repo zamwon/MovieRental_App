@@ -7,13 +7,15 @@ import java.util.List;
 public interface CustomerService {
     void save(Customer customer);
 
-    Customer getById(Long id);
-
-    List<Customer> getAll();
-
     void update(Customer user);
 
     void delete(Long id);
+
+    void delete(Customer customer);
+
+    List<Customer> getAll();
+
+    Customer getById(Long id);
 
     Customer findByEmail(String email);
 

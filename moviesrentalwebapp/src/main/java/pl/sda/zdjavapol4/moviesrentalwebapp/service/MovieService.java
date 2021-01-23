@@ -6,6 +6,7 @@ import pl.sda.zdjavapol4.moviesrentalwebapp.model.Movie;
 import java.util.List;
 import java.util.Set;
 
+
 public interface MovieService {
     void save(Movie movie);
 
