@@ -1,5 +1,8 @@
 package pl.sda.zdjavapol4.moviesrentalwebapp.exception;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class MovieDoesNotExistInCatalogueException extends Exception {
 
     public MovieDoesNotExistInCatalogueException(String title) {
